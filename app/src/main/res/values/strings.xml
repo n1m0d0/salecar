@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Sale Car</string>
+    <string name="serve">https://carsale.ajatic.com/api</string>
+    <string name="company_logo">Company Logo</string>
+    <string name="welcome">Welcome.</string>
+    <string name="description_welcome">Here you will find a world of options so you can find the car of your dreams.</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="example_name">Juan Perez</string>
+    <string name="example_email">nombre@correo.com</string>
+    <string name="example_password">p455w0rd</string>
+    <string name="data">Data</string>
+    <string name="plate">Plate</string>
+    <string name="mileage">Mileage</string>
+    <string name="functioning">functioning</string>
+    <string name="esthetic">esthetic</string>
+</resources>

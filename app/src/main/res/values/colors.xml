@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="celestial_blue">#3E92CC</color>
+    <color name="powder_blue">#9FB4C7</color>
+    <color name="lapis_lazuli">#2A628F</color>
+    <color name="prussian_blue">#13293D</color>
+    <color name="prussian_blue_soft">#16324F</color>
+    <color name="indigo_dye">#18435A</color>
+</resources>
