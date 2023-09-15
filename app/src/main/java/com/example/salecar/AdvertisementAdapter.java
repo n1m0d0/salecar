@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
@@ -59,17 +60,20 @@ public class AdvertisementAdapter extends BaseAdapter {
         TextView tvModel = viewForm.findViewById(R.id.tvModel);
         tvModel.setText(item.getModel().toUpperCase());
 
-        TextView tvPlate = viewForm.findViewById(R.id.tvPlate);
-        tvPlate.setText(item.getPlate().toUpperCase());
+        TextView tvYear = viewForm.findViewById(R.id.tvYear);
+        tvYear.setText(item.getYear().toUpperCase());
 
         TextView tvMileage = viewForm.findViewById(R.id.tvMileage);
-        tvMileage.setText(item.getMileage().toUpperCase());
+        tvMileage.setText(item.getMileage());
 
-        TextView tvFunctioning = viewForm.findViewById(R.id.tvFunctioning);
-        tvFunctioning.setText("10/" + item.getFunctioning());
+        RatingBar rbFunctioning = viewForm.findViewById(R.id.rbFunctioning);
+        rbFunctioning.setRating(item.getFunctioning());
 
-        TextView tvEsthetic = viewForm.findViewById(R.id.tvEsthetic);
-        tvEsthetic.setText("10/" + item.getEsthetic());
+        RatingBar rbEsthetic = viewForm.findViewById(R.id.rbEsthetic);
+        rbEsthetic.setRating(item.getEsthetic());
+
+        TextView tvPrice = viewForm.findViewById(R.id.tvPrice);
+        tvPrice.setText(item.getPrice());
 
         ImageView image1 = viewForm.findViewById(R.id.ivImage);
 

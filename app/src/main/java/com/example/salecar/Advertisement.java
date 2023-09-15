@@ -6,11 +6,11 @@ import android.app.ProgressDialog;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -20,24 +20,40 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Advertisement extends AppCompatActivity {
-    ListView lvAdvertisement;
-    ImageView ivPublicity;
+    TextView tvBrand, tvModel, tvPrice, tvManufactured, tvYear, tvMileage;
+    RatingBar rbFunctioning, rbEsthetic;
 
-    ArrayList<AdvertisementObject> items = new ArrayList<>();
-
+    ImageView ivImage1, ivImage2, ivImage3, ivImage4;
     Util util;
     Integer user_id;
     String email, token;
+
+    Integer id;
+    String name;
+    String brand;
+    String model;
+    String manufactured;
+    String year;
+    String plate;
+    String mileage;
+    Integer functioning;
+    Integer esthetic;
+    String image1;
+    String image2;
+    String image3;
+    String image4;
+    String price;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +62,23 @@ public class Advertisement extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_advertisement);
 
-        lvAdvertisement = findViewById(R.id.lvAdvertisement);
-        ivPublicity = findViewById(R.id.ivPublicity);
+        tvBrand = findViewById(R.id.tvBrand);
+        tvModel = findViewById(R.id.tvModel);
+        tvPrice = findViewById(R.id.tvPrice);
+        tvManufactured = findViewById(R.id.tvManufactured);
+        tvYear = findViewById(R.id.tvYear);
+        tvMileage = findViewById(R.id.tvMileage);
+
+        rbFunctioning = findViewById(R.id.rbFunctioning);
+        rbEsthetic = findViewById(R.id.rbEsthetic);
+
+        ivImage1 = findViewById(R.id.ivImage1);
+        ivImage2 = findViewById(R.id.ivImage2);
+        ivImage3 = findViewById(R.id.ivImage3);
+        ivImage4 = findViewById(R.id.ivImage4);
+
+        Bundle params = this.getIntent().getExtras();
+        id = params.getInt("id");
 
         util = new Util(Advertisement.this);
         Cursor cursor = util.getSession();
@@ -56,13 +87,11 @@ public class Advertisement extends AppCompatActivity {
         token = cursor.getString(3);
 
         petition("advertisement");
-
-        ivPublicity.setVisibility(View.VISIBLE);
     }
 
     private void petition(String direction) {
 
-        String url = getString(R.string.serve) + "/" + direction;
+        String url = getString(R.string.serve) + "/" + direction + "/" + id;
 
         ProgressDialog progressDialog;
         progressDialog = new ProgressDialog(this);
@@ -84,28 +113,42 @@ public class Advertisement extends AppCompatActivity {
                 Log.w("response", "" + response);
                 try {
                     if (response.getBoolean("is_success")) {
-                        JSONArray data = response.getJSONArray("data");
-                        for (int i = 0; i < data.length(); i++) {
-                            JSONObject form = data.getJSONObject(i);
-                            Integer id = form.getInt("id");
-                            String name = form.getString("name");
-                            String brand = form.getString("brand");
-                            String model = form.getString("model");
-                            String manufactured = form.getString("manufactured");
-                            String year = form.getString("year");
-                            String plate = form.getString("plate");
-                            String mileage = form.getString("mileage");
-                            Integer functioning = form.getInt("functioning");
-                            Integer esthetic = form.getInt("esthetic");
-                            String image1 = form.getString("image1");
-                            String image2 = form.getString("image2");
-                            String image3 = form.getString("image3");
-                            String image4 = form.getString("image4");
+                        JSONObject data = response.getJSONObject("data");
+                        name = data.getString("name");
+                        brand = data.getString("brand");
+                        model = data.getString("model");
+                        manufactured = data.getString("manufactured");
+                        year = data.getString("year");
+                        plate = data.getString("plate");
+                        mileage = data.getString("mileage");
+                        functioning = data.getInt("functioning");
+                        esthetic = data.getInt("esthetic");
+                        image1 = data.getString("image1");
+                        image2 = data.getString("image2");
+                        image3 = data.getString("image3");
+                        image4 = data.getString("image4");
+                        price = data.getString("price");
 
-                            items.add(new AdvertisementObject(id, name, brand,model, manufactured, year, plate, mileage, functioning, esthetic, image1));
-                        }
-                        AdvertisementAdapter advertisementAdapter = new AdvertisementAdapter(Advertisement.this, items);
-                        lvAdvertisement.setAdapter(advertisementAdapter);
+                        tvBrand.setText(brand);
+                        tvModel.setText(model);
+                        tvManufactured.setText(manufactured);
+                        tvYear.setText(year);
+                        tvMileage.setText(mileage);
+                        rbFunctioning.setRating(functioning);
+                        rbEsthetic.setRating(esthetic);
+                        tvPrice.setText(price);
+
+                        String[] separated1 = image1.split("/");
+                        Picasso.get().load("https://carsale.ajatic.com/" + "storage/" + separated1[1]).error(R.drawable.sale_car).into(ivImage1);
+
+                        String[] separated2 = image2.split("/");
+                        Picasso.get().load("https://carsale.ajatic.com/" + "storage/" + separated2[1]).error(R.drawable.sale_car).into(ivImage2);
+
+                        String[] separated3 = image3.split("/");
+                        Picasso.get().load("https://carsale.ajatic.com/" + "storage/" + separated3[1]).error(R.drawable.sale_car).into(ivImage3);
+
+                        String[] separated4 = image4.split("/");
+                        Picasso.get().load("https://carsale.ajatic.com/" + "storage/" + separated4[1]).error(R.drawable.sale_car).into(ivImage4);
                     } else {
                         Toast.makeText(Advertisement.this, "", Toast.LENGTH_LONG).show();
                     }

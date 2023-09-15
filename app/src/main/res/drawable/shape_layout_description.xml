@@ -5,6 +5,6 @@
     <solid android:color="@color/lapis_lazuli" />
 
     <corners
-        android:radius="50dp" />
+        android:radius="20dp" />
 
 </shape>

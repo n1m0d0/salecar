@@ -13,8 +13,15 @@
     <string name="example_email">nombre@correo.com</string>
     <string name="example_password">p455w0rd</string>
     <string name="data">Data</string>
+    <string name="manufactured">Manufactured</string>
+    <string name="year">Year</string>
     <string name="plate">Plate</string>
     <string name="mileage">Mileage</string>
-    <string name="functioning">functioning</string>
-    <string name="esthetic">esthetic</string>
+    <string name="functioning">Functioning</string>
+    <string name="esthetic">Esthetic</string>
+    <string name="price">Price</string>
+    <string name="home">Home</string>
+    <string name="message">Message</string>
+    <string name="profile">Profile</string>
+    <string name="contact">Contact</string>
 </resources>

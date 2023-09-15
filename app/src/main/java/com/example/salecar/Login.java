@@ -104,7 +104,7 @@ public class Login extends AppCompatActivity {
                         String token = data.getString("token");
                         util.session(user_id, email, token);
                         Toast.makeText(Login.this, "Bienvenido", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(Login.this, Advertisement.class);
+                        Intent intent = new Intent(Login.this, Advertisements.class);
                         startActivity(intent);
                         finish();
                     } else {

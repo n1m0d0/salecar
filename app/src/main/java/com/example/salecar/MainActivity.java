@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             if (util.verifySession()) {
-                Intent intent = new Intent(MainActivity.this, Advertisement.class);
+                Intent intent = new Intent(MainActivity.this, Advertisements.class);
                 startActivity(intent);
                 finish();
             }

@@ -27,6 +27,9 @@
             android:name=".Advertisement"
             android:exported="false" />
         <activity
+            android:name=".Advertisements"
+            android:exported="false" />
+        <activity
             android:name=".Register"
             android:exported="false" />
         <activity

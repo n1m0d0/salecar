@@ -15,7 +15,9 @@ public class AdvertisementObject {
     protected Integer esthetic;
     protected String image1;
 
-    public AdvertisementObject(Integer id, String name, String brand, String model, String manufactured, String year, String plate, String mileage, Integer functioning, Integer esthetic, String image1) {
+    protected String price;
+
+    public AdvertisementObject(Integer id, String name, String brand, String model, String manufactured, String year, String plate, String mileage, Integer functioning, Integer esthetic, String image1, String price) {
         this.id = id;
         this.name = name;
         this.brand = brand;
@@ -27,6 +29,7 @@ public class AdvertisementObject {
         this.functioning = functioning;
         this.esthetic = esthetic;
         this.image1 = image1;
+        this.price = price;
     }
 
     public Integer getId() {
@@ -115,5 +118,13 @@ public class AdvertisementObject {
 
     public void setImage1(String image1) {
         this.image1 = image1;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 }

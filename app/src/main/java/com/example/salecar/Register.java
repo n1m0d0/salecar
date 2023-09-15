@@ -106,7 +106,7 @@ public class Register extends AppCompatActivity {
                         String token = data.getString("token");
                         util.session(user_id, email, token);
                         Toast.makeText(Register.this, "Bienvenido", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(Register.this, Advertisement.class);
+                        Intent intent = new Intent(Register.this, Advertisements.class);
                         startActivity(intent);
                         finish();
                     } else {
