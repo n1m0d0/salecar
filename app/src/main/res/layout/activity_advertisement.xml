@@ -303,7 +303,7 @@
         app:layout_constraintVertical_bias="1.0">
 
         <ImageButton
-            android:id="@+id/ivHome"
+            android:id="@+id/ibHome"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="5dp"
@@ -313,7 +313,7 @@
             android:src="@drawable/baseline_home_24" />
 
         <ImageButton
-            android:id="@+id/ivMessage"
+            android:id="@+id/ibMessage"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="5dp"
@@ -323,7 +323,7 @@
             android:src="@drawable/baseline_message_24" />
 
         <ImageButton
-            android:id="@+id/ivProfile"
+            android:id="@+id/ibProfile"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="5dp"

@@ -4,7 +4,7 @@ import android.content.Intent;
 
 public class AdvertisementObject {
     protected Integer id;
-    protected String name;
+    protected Integer user_id;
     protected String brand;
     protected String model;
     protected String manufactured;
@@ -17,9 +17,9 @@ public class AdvertisementObject {
 
     protected String price;
 
-    public AdvertisementObject(Integer id, String name, String brand, String model, String manufactured, String year, String plate, String mileage, Integer functioning, Integer esthetic, String image1, String price) {
+    public AdvertisementObject(Integer id, Integer user_id, String brand, String model, String manufactured, String year, String plate, String mileage, Integer functioning, Integer esthetic, String image1, String price) {
         this.id = id;
-        this.name = name;
+        this.user_id = user_id;
         this.brand = brand;
         this.model = model;
         this.manufactured = manufactured;
@@ -40,12 +40,12 @@ public class AdvertisementObject {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Integer getUser_id() {
+        return user_id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
     public String getBrand() {

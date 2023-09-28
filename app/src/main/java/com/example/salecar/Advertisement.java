@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -22,7 +24,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,15 +32,16 @@ import java.util.Map;
 
 public class Advertisement extends AppCompatActivity {
     TextView tvBrand, tvModel, tvPrice, tvManufactured, tvYear, tvMileage;
+    ImageButton ibHome, ibMessage, ibProfile;
     RatingBar rbFunctioning, rbEsthetic;
 
     ImageView ivImage1, ivImage2, ivImage3, ivImage4;
     Util util;
-    Integer user_id;
+    Integer userId;
     String email, token;
 
     Integer id;
-    String name;
+    Integer user_id;
     String brand;
     String model;
     String manufactured;
@@ -82,7 +84,7 @@ public class Advertisement extends AppCompatActivity {
 
         util = new Util(Advertisement.this);
         Cursor cursor = util.getSession();
-        user_id = cursor.getInt(1);
+        userId = cursor.getInt(1);
         email = cursor.getString(2);
         token = cursor.getString(3);
 
@@ -114,7 +116,7 @@ public class Advertisement extends AppCompatActivity {
                 try {
                     if (response.getBoolean("is_success")) {
                         JSONObject data = response.getJSONObject("data");
-                        name = data.getString("name");
+                        user_id = data.getInt("user_id");
                         brand = data.getString("brand");
                         model = data.getString("model");
                         manufactured = data.getString("manufactured");

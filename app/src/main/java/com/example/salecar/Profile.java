@@ -3,18 +3,15 @@ package com.example.salecar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -29,53 +26,42 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Advertisements extends AppCompatActivity {
-    ListView lvAdvertisement;
+public class Profile extends AppCompatActivity {
+    TextView tvName, tvEmail;
     ImageButton ibHome, ibMessage, ibProfile;
+    LinearLayout llBody;
 
-    ArrayList<AdvertisementObject> items = new ArrayList<>();
+    String name;
+    String email;
 
     Util util;
-    Integer user_id;
-    String email, token;
+    Integer userId;
+    String token;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_advertisements);
+        setContentView(R.layout.activity_profile);
 
-        lvAdvertisement = findViewById(R.id.lvAdvertisement);
+        tvName = findViewById(R.id.tvName);
+        tvEmail = findViewById(R.id.tvEmail);
+
+        llBody = findViewById(R.id.llBody);
 
         ibHome = findViewById(R.id.ibHome);
         ibMessage = findViewById(R.id.ibMessage);
         ibProfile = findViewById(R.id.ibProfile);
 
-        util = new Util(Advertisements.this);
+        util = new Util(Profile.this);
         Cursor cursor = util.getSession();
-        user_id = cursor.getInt(1);
-        email = cursor.getString(2);
+        userId = cursor.getInt(1);
         token = cursor.getString(3);
-
-        petition("advertisement");
-
-        lvAdvertisement.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AdvertisementObject selected = (AdvertisementObject) parent.getItemAtPosition(position);
-
-                int advertisement_id = selected.getId();
-
-                Intent intent = new Intent(Advertisements.this, Advertisement.class);
-                intent.putExtra("id", advertisement_id);
-                startActivity(intent);
-            }
-        });
 
         ibHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,18 +77,14 @@ public class Advertisements extends AppCompatActivity {
             }
         });
 
-        ibProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Advertisements.this, Profile.class);
-                startActivity(intent);
-            }
-        });
+        ibProfile.setEnabled(false);
+
+        petition("user");
     }
 
     private void petition(String direction) {
 
-        String url = getString(R.string.serve) + "/" + direction;
+        String url = getString(R.string.serve) + "/" + direction + "/" + userId + "?included=phones";
 
         ProgressDialog progressDialog;
         progressDialog = new ProgressDialog(this);
@@ -124,31 +106,24 @@ public class Advertisements extends AppCompatActivity {
                 Log.w("response", "" + response);
                 try {
                     if (response.getBoolean("is_success")) {
-                        JSONArray data = response.getJSONArray("data");
-                        for (int i = 0; i < data.length(); i++) {
-                            JSONObject jsonObject = data.getJSONObject(i);
-                            Integer id = jsonObject.getInt("id");
-                            Integer user_id = jsonObject.getInt("user_id");
-                            String brand = jsonObject.getString("brand");
-                            String model = jsonObject.getString("model");
-                            String manufactured = jsonObject.getString("manufactured");
-                            String year = jsonObject.getString("year");
-                            String plate = jsonObject.getString("plate");
-                            String mileage = jsonObject.getString("mileage");
-                            Integer functioning = jsonObject.getInt("functioning");
-                            Integer esthetic = jsonObject.getInt("esthetic");
-                            String image1 = jsonObject.getString("image1");
-                            String image2 = jsonObject.getString("image2");
-                            String image3 = jsonObject.getString("image3");
-                            String image4 = jsonObject.getString("image4");
-                            String price = jsonObject.getString("price");
+                        JSONObject data = response.getJSONObject("data");
+                        String name =  data.getString("name");
+                        String email = data.getString("email");
+                        JSONArray phones = data.getJSONArray("phones");
 
-                            items.add(new AdvertisementObject(id, user_id, brand,model, manufactured, year, plate, mileage, functioning, esthetic, image1, price));
+                        tvName.setText(name.toUpperCase());
+                        tvEmail.setText(email);
+
+                        ComponentGenerator component = new ComponentGenerator(Profile.this, llBody);
+
+                        for (int i = 0; i < phones.length(); i++) {
+                            JSONObject jsonObject =  phones.getJSONObject(i);
+                            Integer idPhone = jsonObject.getInt("id");
+                            String number = jsonObject.getString("number");
+                            component.customItemList(idPhone, number);
                         }
-                        AdvertisementAdapter advertisementAdapter = new AdvertisementAdapter(Advertisements.this, items);
-                        lvAdvertisement.setAdapter(advertisementAdapter);
                     } else {
-                        Toast.makeText(Advertisements.this, "", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Profile.this, "", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
